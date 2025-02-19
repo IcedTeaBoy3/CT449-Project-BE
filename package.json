@@ -1,0 +1,36 @@
+{
+  "name": "ct449_project_be",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "Nodejs",
+    "Express",
+    "Mongoose",
+    "BE"
+  ],
+  "homepage": "https://github.com/IcedTeaBoy3/CT449-Project-BE#readme",
+  "bugs": {
+    "url": "https://github.com/IcedTeaBoy3/CT449-Project-BE/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IcedTeaBoy3/CT449-Project-BE.git"
+  },
+  "license": "ISC",
+  "author": "Binh Nguyen",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.10.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

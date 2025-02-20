@@ -1,5 +1,5 @@
-const userRoutes = require('./userRoute');
-const productRoutes = require('./productRoute');
+const userRoutes = require('./UserRoute');
+const productRoutes = require('./ProductRoute');
 const routes = (app) => {
     app.use('/api/users', userRoutes);
     app.use('/api/products', productRoutes);

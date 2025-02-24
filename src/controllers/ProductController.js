@@ -1,5 +1,4 @@
 
-const ProductService = require('../services/ProductService');
 const Sach = require('../models/Sach');
 class ProductController {
     async getAllProducts(req, res) {
@@ -36,31 +35,36 @@ class ProductController {
         }
     }
     async createProduct(req, res) {
-        const { tenSach, donGia, soQuyen, namXuatBan, tacGia, tenNXB,diaChi } = req.body;
-        if(!tenSach || !donGia || !soQuyen || !namXuatBan || !tacGia || !tenNXB || !diaChi) {
+        const { maSach, tenSach, donGia, soQuyen, namXuatBan, tacGia, maNXB } = req.body;
+        if(!maSach || !tenSach || !donGia || !soQuyen || !namXuatBan || !tacGia || !maNXB) {
             return res.json({
                 status: 'error',
                 message: 'Vui lòng nhập đầy đủ thông tin'
             });
         }
-        const checkSach = await Sach.findOne({ tenSach });
+        const checkSach = await Sach.findOne({ maSach }); 
+        const checkNXB = await Sach.findOne({ maNXB }); 
         if(checkSach) {
             return res.json({
                 status: 'error',
                 message: 'Sách đã tồn tại' 
             });
         }
+        if(!checkNXB) {
+            return res.json({
+                status: 'error',
+                message: 'Nhà xuất bản không tồn tại' 
+            });
+        }
         try {
             const result = await Sach.create({
+                maSach,
                 tenSach,
                 donGia,
                 soQuyen,
                 namXuatBan,
                 tacGia,
-                nhaXuatBan: {
-                    tenNXB,
-                    diaChi
-                }
+                maNXB
             });
             res.json({
                 status: 'success',
@@ -80,17 +84,15 @@ class ProductController {
                     message: 'Sách không tồn tại'
                 });
             }
-            const { tenSach, donGia, soQuyen, namXuatBan, tacGia, tenNXB,diaChi } = req.body;
+            const { maSach, tenSach, donGia, soQuyen, namXuatBan, tacGia, maNXB } = req.body;
             const result = await Sach.findByIdAndUpdate(id, {
+                maSach,
                 tenSach,
                 donGia,
                 soQuyen,
                 namXuatBan,
                 tacGia,
-                nhaXuatBan: {
-                    tenNXB,
-                    diaChi
-                }
+                maNXB
             });
             res.json({
                 status: 'success',

@@ -4,13 +4,15 @@ const Schema = mongoose.Schema;
 
 const NhanVienSchema = new Schema(
   {
-    hoTenNV: { type: String, maxLength: 255, required: true },
-    matKhau: { type: String, maxLength: 255, required: true },
-    diaChi: { type: String, maxLength: 255, required: true },
-    soDienThoai: { type: String, maxLength: 15, required: true },
-    chucVu: { type: String, maxLength: 255, required: true },
+    MSNV: { type: String, required: true, unique: true },
+    HoTenNV: { type: String, required: true },
+    Password: { type: String, required: true },
+    ChucVu: { type: String, required: true },
+    DiaChi: { type: String, required: true },
+    SoDienThoai: { type: String, required: true }
   },
   {
     timestamps: true, // Thêm thời gian createdAt, updatedAt
   }
 );
+module.exports = mongoose.model('NhanVien', NhanVienSchema);

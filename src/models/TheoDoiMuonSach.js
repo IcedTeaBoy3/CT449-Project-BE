@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 
 const TheoDoiMuonSachSchema = new Schema(
     {
-        maDocGia: { type: mongoose.Schema.Types.ObjectId, ref: 'DocGia', required: true },
-        maSach: { type: mongoose.Schema.Types.ObjectId, ref:'Sach', required: true },
-        ngayMuon: { type: Date, required: true },
-        ngayTra: { type: Date, required: true },
+        MaDocGia: { type: mongoose.Schema.Types.ObjectId, ref: 'DocGia', required: true },
+        MaSach: { type: mongoose.Schema.Types.ObjectId, ref: 'Sach', required: true },
+        NgayMuon: { type: Date, required: true },
+        NgayTra: { type: Date }
     },
     {
         timestamps: true, // Thêm thời gian createdAt, updatedAt

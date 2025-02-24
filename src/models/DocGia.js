@@ -4,11 +4,13 @@ const Schema = mongoose.Schema;
 
 const DocGiaSchema = new Schema(
     {
-        hoTenDG: { type: String, maxLength: 255, required: true },
-        ngaySinh: { type: Date, required: true },
-        phai: { type: Boolean, required: true },
-        diaChi: { type: String, maxLength: 255, required: true },
-        soDienThoai: { type: String, maxLength: 15, required: true },
+        MaDocGia: { type: String, required: true, unique: true },
+        HoLot: { type: String, required: true },
+        Ten: { type: String, required: true },
+        NgaySinh: { type: Date, required: true },
+        Phai: { type: String, enum: ['Nam', 'Nữ'], required: true },
+        DiaChi: { type: String, required: true },
+        DienThoai: { type: String, required: true }
     },
     {
         timestamps: true, // Thêm thời gian createdAt, updatedAt

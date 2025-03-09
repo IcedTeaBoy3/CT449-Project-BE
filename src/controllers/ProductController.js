@@ -1,5 +1,6 @@
 
 const Sach = require('../models/Sach');
+const NXB = require('../models/NhaXuatBan');
 class ProductController {
     async getAllProducts(req, res) {
         try {
@@ -35,15 +36,15 @@ class ProductController {
         }
     }
     async createProduct(req, res) {
-        const { maSach, tenSach, donGia, soQuyen, namXuatBan, tacGia, maNXB } = req.body;
-        if(!maSach || !tenSach || !donGia || !soQuyen || !namXuatBan || !tacGia || !maNXB) {
+        const { MaSach, TenSach, DonGia, SoQuyen, NamXuatBan, TacGia, MaNXB } = req.body;
+        if(!MaSach || !TenSach || !DonGia || !SoQuyen || !NamXuatBan || !TacGia || !MaNXB) {
             return res.json({
                 status: 'error',
                 message: 'Vui lòng nhập đầy đủ thông tin'
             });
         }
-        const checkSach = await Sach.findOne({ maSach }); 
-        const checkNXB = await Sach.findOne({ maNXB }); 
+        const checkSach = await Sach.findOne({ MaSach }); 
+        const checkNXB = await NXB.findOne({ MaNXB }); 
         if(checkSach) {
             return res.json({
                 status: 'error',
@@ -58,13 +59,13 @@ class ProductController {
         }
         try {
             const result = await Sach.create({
-                maSach,
-                tenSach,
-                donGia,
-                soQuyen,
-                namXuatBan,
-                tacGia,
-                maNXB
+                MaSach,
+                TenSach,
+                DonGia,
+                SoQuyen,
+                NamXuatBan,
+                TacGia,
+                MaNXB
             });
             res.json({
                 status: 'success',
@@ -77,22 +78,22 @@ class ProductController {
     }
     async updateProduct(req, res) {
         try{
-            const id = res.params.id;
+            const id = req.params.id;
             if(!id){
                 return res.json({
                     status: 'error',
                     message: 'Sách không tồn tại'
                 });
             }
-            const { maSach, tenSach, donGia, soQuyen, namXuatBan, tacGia, maNXB } = req.body;
+            const { MaSach, TenSach, DonGia, SoQuyen, NamXuatBan, TacGia, MaNXB } = req.body;
             const result = await Sach.findByIdAndUpdate(id, {
-                maSach,
-                tenSach,
-                donGia,
-                soQuyen,
-                namXuatBan,
-                tacGia,
-                maNXB
+                MaSach,
+                TenSach,
+                DonGia,
+                SoQuyen,
+                NamXuatBan,
+                TacGia,
+                MaNXB
             });
             res.json({
                 status: 'success',

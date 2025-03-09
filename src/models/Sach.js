@@ -8,7 +8,7 @@ const SachSchema = new Schema(
     DonGia: { type: Number, required: true },
     SoQuyen: { type: Number, required: true },
     NamXuatBan: { type: Number, required: true },
-    MaNXB: { type: mongoose.Schema.Types.ObjectId, ref: 'NhaXuatBan', required: true },
+    MaNXB: { type: String, ref: 'NhaXuatBan', required: true },
     TacGia: { type: String, required: true }
   },
   {

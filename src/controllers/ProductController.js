@@ -36,7 +36,7 @@ class ProductController {
         }
     }
     async createProduct(req, res) {
-        const { MaSach, TenSach, DonGia, SoQuyen, NamXuatBan, TacGia, MaNXB } = req.body;
+        const { MaSach, TenSach, DonGia, SoQuyen, NamXuatBan, TacGia, MaNXB, TheLoai, HinhAnh } = req.body;
         if(!MaSach || !TenSach || !DonGia || !SoQuyen || !NamXuatBan || !TacGia || !MaNXB) {
             return res.json({
                 status: 'error',
@@ -65,7 +65,9 @@ class ProductController {
                 SoQuyen,
                 NamXuatBan,
                 TacGia,
-                MaNXB
+                MaNXB,
+                TheLoai,
+                HinhAnh
             });
             res.json({
                 status: 'success',
@@ -85,7 +87,7 @@ class ProductController {
                     message: 'Sách không tồn tại'
                 });
             }
-            const { MaSach, TenSach, DonGia, SoQuyen, NamXuatBan, TacGia, MaNXB } = req.body;
+            const { MaSach, TenSach, DonGia, SoQuyen, NamXuatBan, TacGia, MaNXB, HinhAnh, TheLoai } = req.body;
             const result = await Sach.findByIdAndUpdate(id, {
                 MaSach,
                 TenSach,
@@ -93,8 +95,10 @@ class ProductController {
                 SoQuyen,
                 NamXuatBan,
                 TacGia,
-                MaNXB
-            });
+                MaNXB,
+                HinhAnh,
+                TheLoai
+            }, { new: true });
             res.json({
                 status: 'success',
                 message: 'Cập nhật sách thành công',

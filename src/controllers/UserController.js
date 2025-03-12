@@ -130,7 +130,9 @@ class UserController {
             const validEmail = emailRegex.test(Email);
             if(!validEmail) {
                 return res.status(400).json({
+
                     status: 'error',
+                    error: 'email',
                     message: 'Email không hợp lệ'
                 });
             }

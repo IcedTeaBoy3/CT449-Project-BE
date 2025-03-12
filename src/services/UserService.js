@@ -74,6 +74,7 @@ class UserService {
                 if (!checkUser) {
                     resolve({
                         status: 'error',
+                        error: 'email',
                         message: 'Email không tồn tại'
                     });
                 }
@@ -81,6 +82,7 @@ class UserService {
                 if (!comparePassword) {
                     resolve({
                         status: 'error',
+                        error: 'password',
                         message: 'Sai mật khẩu'
                     });
                 }

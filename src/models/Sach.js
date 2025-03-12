@@ -5,6 +5,8 @@ const SachSchema = new Schema(
   {
     MaSach: { type: String, required: true, unique: true },
     TenSach: { type: String, required: true },
+    TheLoai: { type: String},
+    HinhAnh: { type: String },
     DonGia: { type: Number, required: true },
     SoQuyen: { type: Number, required: true },
     NamXuatBan: { type: Number, required: true },

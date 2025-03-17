@@ -124,7 +124,7 @@ class UserService {
                 const deleteUser = await User.findByIdAndDelete(userId);
                 resolve({
                     status: 'success',
-                    message: 'Xóa user thành công'
+                    message: 'Xóa người dùng thành công'
                 });
             } catch (error) {
                 console.log(error);

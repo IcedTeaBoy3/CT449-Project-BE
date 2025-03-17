@@ -30,7 +30,10 @@ class AuthMiddleWare {
     // là user hoặc là admin có thể thực hiện các thao tác
     authUserMiddleWare = (req, res, next) => {
         const authHeader = req.headers["authorization"];
+
         const token =  authHeader && authHeader.split(' ')[1]; // Lấy token từ header
+
+        
         const userId = req.params.id;
         if (!token) {
             return res.status(401).json({ 

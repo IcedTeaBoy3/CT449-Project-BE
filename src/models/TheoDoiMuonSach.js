@@ -6,7 +6,8 @@ const TheoDoiMuonSachSchema = new Schema(
         MaDocGia: { type: mongoose.Schema.Types.ObjectId, ref: 'DocGia', required: true },
         MaSach: { type: mongoose.Schema.Types.ObjectId, ref: 'Sach', required: true },
         NgayMuon: { type: Date, required: true },
-        NgayTra: { type: Date }
+        NgayTra: { type: Date },
+        TrangThai: { type: String, required: true, default: 'Chưa trả' },
     },
     {
         timestamps: true, // Thêm thời gian createdAt, updatedAt

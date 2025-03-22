@@ -10,4 +10,5 @@ router.put('/return-book/:id', borrowBookController.returnBook);
 router.get('/get-all-borrow-book', authMiddleWare, borrowBookController.getAllBorrowBookAdmin);
 router.put('/approve-borrow-book/:id', authMiddleWare,borrowBookController.approveBorrowBook);
 router.delete('/delete-borrow-book/:id',authMiddleWare, borrowBookController.deleteBorrowBook);
+router.get('/count-borrow-book',authMiddleWare, borrowBookController.countBorrowBook);
 module.exports = router;

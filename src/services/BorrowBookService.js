@@ -104,10 +104,30 @@ class BorrowBookService {
         return new Promise(async (resolve, reject) => {
             try {
                 const data = await TheoDoiMuonSach.findByIdAndDelete(id);
-                const updateSach = await Sach.findByIdAndUpdate({_id:data.MaSach}, { $inc: { SoQuyen: 1 } }, { new: true });
+                if(data.TrangThai !== 'Đã trả'){
+                    const updateSach = await Sach.findByIdAndUpdate({_id:data.MaSach}, { $inc: { SoQuyen: 1 } }, { new: true });
+                }
                 resolve({
                     status: 'success',
                     message: 'Xóa mượn sách thành công',
+                    data: data
+                });
+            } catch (error) {
+                reject({
+                    status: 'error',
+                    message: 'Lỗi server'
+                });
+            }
+        });
+    }
+    async countBorrowBook(){
+
+        return new Promise(async (resolve, reject) => {
+            try {
+                const data = await TheoDoiMuonSach.find({ TrangThai: { $ne: "Chờ xác nhận" } }).countDocuments();
+                resolve({
+                    status: 'success',
+                    message: 'Lấy số lượng mượn sách thành công',
                     data: data
                 });
             } catch (error) {

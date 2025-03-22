@@ -5,11 +5,14 @@ class UserService {
     async createUser(data) {
         return new Promise(async (resolve, reject) => {
             try{
-                const { Email, Password } = data;
+                const { Email, Password, Phone, FullName } = data;
+                const MaDocGia = 'DG' + Date.now().toString(36) + Math.random().toString(36).substring(2, 5);
+                // Kiểm tra email đã tồn tại chưa
                 const checkUser = await User.findOne({ Email: Email });
                 if(checkUser) {
-                    reject({
+                    resolve({
                         status: 'error',
+                        error: 'email',
                         message: 'Email đã tồn tại'
                     });
                 }
@@ -18,8 +21,11 @@ class UserService {
                 
                 const hashPassword = await bcrypt.hash(Password, salt);
                 const newUser = await User.create({
+                    MaDocGia: MaDocGia,
+                    FullName: FullName,
                     Email: Email,
-                    Password: hashPassword
+                    Password: hashPassword,
+                    Phone: Phone,
                 });
                 if(newUser) {
                     resolve({
@@ -167,6 +173,24 @@ class UserService {
                     status: 'success',
                     message: 'Lấy thông tin user thành công',
                     data: user
+                });
+            } catch (error) {
+                console.log(error);
+                reject({
+                    status: 'error',
+                    message: 'Internal Server Error'
+                });
+            }
+        });
+    }
+    async countUser(){
+        return new Promise(async (resolve, reject) => {
+            try {
+                const count = await User.countDocuments({isAdmin: false});
+                resolve({
+                    status: 'success',
+                    message: 'Lấy số lượng user thành công',
+                    data: count
                 });
             } catch (error) {
                 console.log(error);

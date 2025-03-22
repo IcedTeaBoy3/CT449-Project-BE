@@ -10,5 +10,6 @@ router.post('/login-user',userController.loginUser);
 router.post('/create-user', userController.createUser);
 router.put('/update-user/:id',authUserMiddleWare, userController.updateUser);
 router.delete('/delete-user/:id', authMiddleWare ,userController.deleteUser);
+router.get('/count-user',authMiddleWare, userController.countUser);
 
 module.exports = router;

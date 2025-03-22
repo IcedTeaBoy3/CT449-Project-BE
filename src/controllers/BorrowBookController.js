@@ -90,5 +90,13 @@ class BorrowBookController {
             res.status(400).json({message: error.message })
         }
     }
+    async countBorrowBook(req, res){
+        try{
+            const data = await BorrowBookService.countBorrowBook()
+            res.status(200).json(data)
+        }catch (error){
+            res.status(400).json({message: error.message })
+        }
+    }
 }
 module.exports = new BorrowBookController();

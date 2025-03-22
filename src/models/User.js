@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 
 const DocGiaSchema = new Schema(
     {
-        MaDocGia: { type: mongoose.Schema.Types.ObjectId, required: true },
+        MaDocGia: { type: String, required: true },
         FullName: { type: String },
         Date: { type: Date},
         Email: { type: String, required : true },

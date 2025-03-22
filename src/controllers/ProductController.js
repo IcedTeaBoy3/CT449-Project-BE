@@ -1,6 +1,7 @@
 
 const Sach = require('../models/Sach');
 const NXB = require('../models/NhaXuatBan');
+const TheoDoiMuonSach = require('../models/TheoDoiMuonSach');
 class ProductController {
     async getAllProducts(req, res) {
         try {
@@ -118,7 +119,15 @@ class ProductController {
                     message: 'Sách không tồn tại'
                 });
             }
-            const result = await Sach.findByIdAndDelete(id);
+            const resultTheoDoi = await TheoDoiMuonSach.findOne({ MaSach: id });
+            if(resultTheoDoi) {
+                return res.json({
+                    status: 'error',
+                    message: 'Sách đã được mượn không thể xóa'
+                })
+            }
+            const result = await Sach.findByIdAndDelete({ _id: id });
+            // Nếu sách đã mượn thì báo lỗi
             res.json({
                 status: 'success',
                 message: 'Xóa sách thành công',

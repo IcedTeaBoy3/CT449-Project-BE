@@ -33,8 +33,8 @@ class UserController {
     }
     async createUser(req, res) {
         try{
-            const { Email, Password, ConfirmPassword } = req.body;
-            if(!Email || !Password || !ConfirmPassword) {
+            const { FullName, Email, Password, ConfirmPassword, Phone } = req.body;
+            if(!Email || !Password || !ConfirmPassword || !FullName || !Phone) {
                 return res.status(400).json({
                     status: 'error',
                     message: 'Vui lòng nhập đầy đủ thông tin'
@@ -45,12 +45,14 @@ class UserController {
             if(!validEmail) {
                 return res.status(400).json({
                     status: 'error',
+                    error: 'email',
                     message: 'Email không hợp lệ'
                 });
             }
             if(Password !== ConfirmPassword) {
                 return res.status(400).json({
                     status: 'error',
+                    error: 'password',
                     message: 'Mật khẩu không khớp'
                 });
             }
@@ -140,6 +142,18 @@ class UserController {
             res.json(data);
         }
         catch(error){
+            console.log(error);
+            res.status(500).json({
+                status: 'error',
+                message: 'Internal Server Error'
+            });
+        }
+    }
+    async countUser(req, res) {
+        try{
+            const data = await UserService.countUser();
+            res.json(data);
+        }catch(error){
             console.log(error);
             res.status(500).json({
                 status: 'error',

@@ -4,7 +4,7 @@ class NhaXuatBanController {
     async getAllNXB(req, res) {
         try {
             const limit = parseInt(req.query.limit) || 10;
-            const result = await NhaXuatBan.find().limit(limit);
+            const result = await NhaXuatBan.find().limit(limit).sort({ createdAt: -1 });
             res.json({
                 status: 'success',
                 message: 'Lấy danh sách NXB thành công',

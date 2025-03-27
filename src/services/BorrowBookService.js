@@ -34,7 +34,7 @@ class BorrowBookService {
     async getAllBorrowBookByUser(userId) {
         return new Promise(async (resolve, reject) => {
             try {
-                const data = await TheoDoiMuonSach.find({MaDocGia: userId}).populate('MaSach');
+                const data = await TheoDoiMuonSach.find({MaDocGia: userId}).populate('MaSach').sort({ createdAt: -1 });
                 resolve({
                     status: 'success',
                     message: 'Lấy danh sách mượn sách thành công',
@@ -69,7 +69,7 @@ class BorrowBookService {
     async getAllBorrowBookAdmin(){
         return new Promise(async (resolve, reject) => {
             try {
-                const allBorrowBooks = await TheoDoiMuonSach.find().populate('MaSach').populate('MaDocGia');
+                const allBorrowBooks = await TheoDoiMuonSach.find().populate('MaSach').populate('MaDocGia').sort({ createdAt: -1 });
                 resolve({
                     status: 'success',
                     message: 'Lấy danh sách mượn sách thành công',

@@ -149,6 +149,26 @@ class UserController {
             });
         }
     }
+    async loginGoogle(req, res) {
+        try{
+            const { code } = req.body;
+            if(!code) {
+                return res.status(400).json({
+                    status: 'error',
+                    message: 'Vui lòng nhập tokenId'
+                });
+            }
+            const data = await UserService.loginGoogle(code);
+            res.json(data);
+        }
+        catch(error){
+            console.log(error);
+            res.status(500).json({
+                status: 'error',
+                message: 'Internal Server Error'
+            });
+        }
+    }
     async countUser(req, res) {
         try{
             const data = await UserService.countUser();

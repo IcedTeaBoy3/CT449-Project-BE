@@ -6,7 +6,7 @@ class ProductController {
     async getAllProducts(req, res) {
         try {
             const limit = parseInt(req.query.limit) || 10;
-            const products = await Sach.find().limit(limit);
+            const products = await Sach.find().limit(limit).sort({ createdAt: -1 });
             res.json({
                 status: 'success',
                 message: 'Lấy danh sách sách thành công',

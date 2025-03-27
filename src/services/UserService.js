@@ -1,6 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const { generateAccessToken, generateRefreshToken } = require('./JwtService');
+const axios = require('axios');
 class UserService {
     async createUser(data) {
         return new Promise(async (resolve, reject) => {
@@ -115,6 +116,74 @@ class UserService {
                 });
             }
         
+        });
+    }
+    async loginGoogle(code){
+        return new Promise(async (resolve, reject) => {
+            try{
+                const tokenResponse = await axios.post("https://oauth2.googleapis.com/token", {
+                    client_id: process.env.GOOGLE_CLIENT_ID,
+                    client_secret: process.env.GOOGLE_CLIENT_SECRET,
+                    redirect_uri: "postmessage",
+                    grant_type: "authorization_code",
+                    code,
+                });
+                const { id_token, access_token } = tokenResponse.data;
+                  // Giải mã ID Token để lấy thông tin user
+                const userInfo = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+                    headers: { Authorization: `Bearer ${access_token}` },
+                });
+                const { email, name, picture } = userInfo.data;
+                // Kiểm tra xem user đã tồn tại trong database chưa
+                const checkUser = await User.findOne({ Email: email });
+                if(!checkUser){
+                    // Tạo mới user
+                    const MaDocGia = 'DG' + Date.now().toString(36) + Math.random().toString(36).substring(2, 5);
+                    const newUser = await User.create({
+                        MaDocGia: MaDocGia,
+                        Email: email,
+                        Avatar: picture,
+                        FullName: name,
+                        isAdmin: false
+                    });
+                    if(newUser){
+                        const access_token_create = await generateAccessToken({
+                            id: newUser._id,
+                            isAdmin: newUser.isAdmin
+                        });
+                        const refresh_token = await generateRefreshToken({
+                            id: newUser._id,
+                            isAdmin: newUser.isAdmin
+                        });
+                        resolve({
+                            status: 'success',
+                            message: 'Đăng nhập thành công',
+                            access_token: access_token_create,
+                            refresh_token
+                        });
+                    }
+                }
+                const my_access_token = await generateAccessToken({
+                    id: checkUser._id,
+                    isAdmin: checkUser.isAdmin
+                });
+                const refresh_token = await generateRefreshToken({
+                    id: checkUser._id,
+                    isAdmin: checkUser.isAdmin
+                });
+                resolve({
+                    status: 'success',
+                    message: 'Đăng nhập thành công',
+                    access_token: my_access_token,
+                    refresh_token
+                });
+            }catch(error){
+                reject({
+                    status: 'error',
+                    message: 'Internal Server Error',
+                    error: error
+                });
+            }
         });
     }
     async deleteUser(userId){

@@ -7,6 +7,7 @@ const { authUserMiddleWare, authMiddleWare } = authMiddleware;
 router.get('/get-all-users',authMiddleWare, userController.getAllUsers);
 router.get('/get-user-detail/:id',authUserMiddleWare, userController.getUserDetail);
 router.post('/login-user',userController.loginUser);
+router.post('/login-google',userController.loginGoogle);
 router.post('/create-user', userController.createUser);
 router.put('/update-user/:id',authUserMiddleWare, userController.updateUser);
 router.delete('/delete-user/:id', authMiddleWare ,userController.deleteUser);
